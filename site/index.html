@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Avero One | The all-in-one website, CRM and automation platform</title>
+<meta name="description" content="Avero One by Avero Automations: a modern website, a proper CRM and automated follow-up in one platform. Capture every lead, chase every quote and see your whole business on one screen.">
+<meta name="theme-color" content="#040806">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%2314A74A'%3E%3Crect x='39.85' y='9.85' width='20.3' height='20.3' rx='3.2' transform='rotate(45 50 20)'/%3E%3Crect x='9.85' y='39.85' width='20.3' height='20.3' rx='3.2' transform='rotate(45 20 50)'/%3E%3Crect x='39.85' y='39.85' width='20.3' height='20.3' rx='3.2' transform='rotate(45 50 50)'/%3E%3Crect x='69.85' y='39.85' width='20.3' height='20.3' rx='3.2' transform='rotate(45 80 50)'/%3E%3Crect x='39.85' y='69.85' width='20.3' height='20.3' rx='3.2' transform='rotate(45 50 80)'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040806; --bg2:#07110b;
+  --em:#14A74A; --em2:#2fe07a; --mint:#a6ffd0;
+  --text:#eef5f0; --muted:#8fa399; --line:rgba(255,255,255,.09);
+  --glass:rgba(8,18,12,.62); --red:#ff5a4a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none}
+.nogl #gl{display:none}
+.nogl body{background:radial-gradient(ellipse at 70% 30%,#0b3a1d 0,#040806 60%)}
+.vig{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,transparent 35%,rgba(4,8,6,.55) 78%,rgba(4,8,6,.92) 100%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.5) 0 1px,transparent 1px 3px)}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:30;
+  background:linear-gradient(90deg,var(--em),var(--mint));box-shadow:0 0 14px var(--em2)}
+#cursor{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;z-index:1;pointer-events:none;
+  background:radial-gradient(circle,rgba(47,224,122,.13),transparent 62%);will-change:transform;opacity:0;transition:opacity .4s}
+main,nav,footer{position:relative;z-index:2}
+
+h1,h2,h3,.disp{font-family:Anton,Impact,'Arial Narrow',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.012em;line-height:1.02}
+em{font-style:normal;color:var(--em2)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:20;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(4,8,6,.5);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-family:Anton;font-size:22px;letter-spacing:.07em;text-transform:uppercase}
+.brand svg{width:30px;height:30px}
+.brand b{font-weight:400;color:var(--em2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;font-size:16px;border-radius:12px;padding:15px 28px;border:0;cursor:pointer;
+  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;letter-spacing:.01em}
+.btn.primary{background:linear-gradient(180deg,#3df08a,#14A74A);color:#02100a;box-shadow:0 0 0 0 rgba(47,224,122,.55),0 10px 30px -8px rgba(20,167,74,.7);animation:pulse 2.6s infinite}
+.btn.primary:hover{transform:translateY(-2px) scale(1.03)}
+.btn.ghost{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);backdrop-filter:blur(8px)}
+.btn.ghost:hover{border-color:var(--em2);transform:translateY(-2px)}
+.btn.sm{padding:10px 18px;font-size:14px}
+.btn.xl{font-size:20px;padding:20px 42px;border-radius:14px}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,224,122,.5),0 10px 30px -8px rgba(20,167,74,.7)}70%{box-shadow:0 0 0 18px rgba(47,224,122,0),0 10px 30px -8px rgba(20,167,74,.7)}100%{box-shadow:0 0 0 0 rgba(47,224,122,0),0 10px 30px -8px rgba(20,167,74,.7)}}
+
+section{position:relative}
+/* HERO */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:110px 0 80px}
+.tag{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(47,224,122,.38);color:var(--mint);padding:7px 15px;border-radius:99px;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(20,167,74,.1);margin-bottom:24px}
+.tag i{width:7px;height:7px;border-radius:2px;background:var(--em2);transform:rotate(45deg);box-shadow:0 0 10px var(--em2)}
+.hero h1{font-size:clamp(44px,7vw,104px);max-width:900px}
+.hero h1 em{text-shadow:0 0 50px rgba(47,224,122,.5)}
+.hero .sub{font-size:clamp(17px,2vw,21px);color:#b3c3ba;max-width:560px;margin:26px 0 34px}
+.hero .row{display:flex;gap:14px;flex-wrap:wrap}
+.hero small{display:block;margin-top:20px;color:var(--muted);font-size:13.5px}
+.rise{opacity:0;transform:translateY(30px);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.scrollhint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted);font-size:11px;letter-spacing:.28em;text-transform:uppercase}
+.scrollhint span{width:1px;height:46px;background:linear-gradient(var(--em2),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* STRIP */
+.strip{border-block:1px solid var(--line);background:rgba(4,8,6,.72);backdrop-filter:blur(8px);overflow:hidden;padding:18px 0}
+.track{display:flex;gap:54px;width:max-content;animation:slide 30s linear infinite;font-family:Anton;font-size:22px;letter-spacing:.09em;text-transform:uppercase;color:#c9d8cf}
+.track b{color:var(--em2);font-weight:400}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* PROBLEM */
+.pinwrap{position:relative}
+.stick{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center}
+.stick>.wrap{width:100%}
+.scrubwrap{height:260vh}
+.scrub{font-family:Anton;text-transform:uppercase;font-size:clamp(32px,5.4vw,80px);line-height:1.06;max-width:1050px;letter-spacing:.01em}
+.scrub span{opacity:.14;transition:opacity .15s linear}
+.scrub span.em{color:var(--red)}
+.kick{display:block;font-family:Inter;font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:20px}
+.pains{padding:130px 0 140px}
+.grid{display:grid;gap:18px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:30px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:border-color .25s,transform .15s;transform-style:preserve-3d;will-change:transform}
+.card h3{font-size:28px;margin-bottom:10px}
+.card p{color:#a9b9b0;font-size:16px}
+.pains .card{border-color:rgba(255,90,74,.28)}
+.pains .card h3{color:#ff8372}
+.pains h2{margin-bottom:34px}
+h2{font-size:clamp(38px,6vw,84px);margin-bottom:18px}
+
+/* FEATURES */
+.featwrap{height:600vh}
+.fgrid{display:grid;grid-template-columns:minmax(0,500px) 1fr;gap:30px;width:100%}
+.fpanel{position:relative;min-height:500px;background:var(--glass);border:1px solid var(--line);border-radius:26px;padding:34px 34px 30px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 0 0 1px rgba(47,224,122,.05)}
+.fstep{position:absolute;left:34px;right:34px;top:34px;opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.fstep.on{opacity:1;transform:none;pointer-events:auto}
+.fstep .n{font-family:Anton;font-size:15px;letter-spacing:.2em;color:var(--em2);margin-bottom:12px;display:block}
+.fstep h3{font-size:clamp(34px,4.4vw,56px);margin-bottom:16px}
+.fstep p{color:#b3c3ba;font-size:17px;margin-bottom:20px}
+.fstep ul{list-style:none;display:grid;gap:9px}
+.fstep li{display:flex;gap:11px;align-items:center;font-weight:600;font-size:15.5px}
+.fstep li:before{content:"";flex:none;width:9px;height:9px;border-radius:2.5px;background:var(--em2);transform:rotate(45deg);box-shadow:0 0 10px rgba(47,224,122,.7)}
+.fstep li small{color:var(--muted);font-weight:500}
+.rail{position:absolute;left:34px;bottom:24px;display:flex;gap:14px}
+.rail i{width:11px;height:11px;border-radius:3px;background:rgba(255,255,255,.14);transform:rotate(45deg);transition:background .3s,box-shadow .3s,transform .3s}
+.rail i.on{background:var(--em2);box-shadow:0 0 14px var(--em2);transform:rotate(45deg) scale(1.35)}
+.fhead{position:absolute;top:84px;left:0;right:0}
+
+/* ALL-IN-ONE */
+.all{padding:130px 0 90px}
+.all .head{text-align:center;margin-bottom:46px}
+.all .head p{color:var(--muted);max-width:640px;margin:0 auto;font-size:18px}
+.allgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.tile{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:24px 22px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:border-color .25s,transform .15s;transform-style:preserve-3d;will-change:transform;display:flex;flex-direction:column}
+.tile:hover{border-color:rgba(47,224,122,.55)}
+.tile h4{font-family:Anton;font-weight:400;text-transform:uppercase;letter-spacing:.02em;font-size:23px;line-height:1.1;margin-bottom:8px}
+.tile p{color:#a9b9b0;font-size:14.5px;margin-bottom:14px}
+.tile .pl{margin-top:auto;align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);border:1px solid rgba(47,224,122,.35);border-radius:99px;padding:4px 10px;background:rgba(20,167,74,.1)}
+.allnote{text-align:center;color:var(--muted);font-size:13px;margin-top:22px}
+@media(max-width:980px){.allgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.allgrid{grid-template-columns:1fr}}
+
+/* CALC / FAQ / EXTRAS */
+.ai{font-size:12.5px;color:var(--muted);font-weight:600;margin:-6px 0 14px}
+.incl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 0}
+.incl div{background:var(--glass);border:1px solid rgba(47,224,122,.28);border-radius:18px;padding:18px 20px;backdrop-filter:blur(14px)}
+.incl b{display:block;font-family:Anton;font-weight:400;text-transform:uppercase;letter-spacing:.03em;font-size:20px;color:var(--mint);margin-bottom:4px}
+.incl span{color:var(--muted);font-size:14px}
+.calc{padding:110px 0 70px}
+.calc .head{text-align:center;margin-bottom:40px}
+.calc .head p{color:var(--muted);max-width:620px;margin:0 auto;font-size:18px}
+.calcbox{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;max-width:1000px;margin:0 auto}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(14px)}
+.inputs label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:#cdd9d1}
+.inputs input{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:11px;padding:12px 12px 12px 26px;color:var(--text);font:600 16px Inter,sans-serif;outline:none;transition:border-color .2s}
+.inputs input:focus{border-color:var(--em2)}
+.inputs .f{position:relative}.inputs .f:before{content:"$";position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;z-index:1}
+.calcout{background:linear-gradient(180deg,rgba(20,167,74,.16),var(--glass));border:1px solid rgba(47,224,122,.5);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px;backdrop-filter:blur(14px)}
+.tot small{display:block;color:var(--muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.tot b{font-family:Anton;font-weight:400;font-size:64px;line-height:1}
+.tot span{color:var(--muted);font-weight:600}
+.vs{display:grid;gap:8px;font-size:14px}
+.vs div{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(0,0,0,.28)}
+.vs div.save{border:1px solid rgba(47,224,122,.55);color:var(--mint)}
+.vs div em{font-style:normal;font-weight:800}
+.vs p{color:var(--muted)}
+.calcout .btn{margin-top:auto}
+.faq{padding:90px 0 40px}
+.faq .head{text-align:center;margin-bottom:34px}
+.faqlist{max-width:820px;margin:0 auto;display:grid;gap:10px}
+.faqlist details{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:0 22px;backdrop-filter:blur(14px);transition:border-color .2s}
+.faqlist details[open]{border-color:rgba(47,224,122,.5)}
+.faqlist summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;font-size:16.5px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.faqlist summary::-webkit-details-marker{display:none}
+.faqlist summary:after{content:"";flex:none;width:10px;height:10px;border-radius:3px;background:var(--em2);transform:rotate(45deg);transition:transform .25s}
+.faqlist details[open] summary:after{transform:rotate(135deg) scale(1.2)}
+.faqlist p{color:#b3c3ba;padding:0 0 20px;font-size:15.5px}
+.ctarow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;padding:30px 22px 10px}
+@media(max-width:900px){.calcbox{grid-template-columns:1fr}.incl{grid-template-columns:1fr}}
+@media(max-width:520px){.inputs{grid-template-columns:1fr}}
+
+/* PRODUCT */
+.prodwrap{height:360vh}
+.prodhead{text-align:center;margin-bottom:26px}
+.prodhead h2{margin-bottom:10px;font-size:clamp(34px,5.4vw,74px)}
+.prodhead p{color:var(--muted);max-width:560px;margin:0 auto}
+.deck{position:relative;perspective:1500px;width:100%;height:min(430px,56vh);margin:0 auto}
+.pane{position:absolute;left:50%;top:50%;width:min(640px,88vw);height:min(400px,54vh);border-radius:18px;background:linear-gradient(160deg,#0c1a12,#07100b);border:1px solid rgba(47,224,122,.22);
+  box-shadow:0 40px 100px -30px rgba(0,0,0,.9),0 0 60px -10px rgba(20,167,74,.35);overflow:hidden;will-change:transform,opacity;transform-style:preserve-3d;font-size:12.5px}
+.pbar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.pbar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
+.pbar b{margin-left:8px;font-weight:700;font-size:12.5px}
+.pbar em{margin-left:auto;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pbody{padding:14px;height:calc(100% - 38px)}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;height:100%}
+.col{background:rgba(255,255,255,.025);border-radius:11px;padding:9px;display:flex;flex-direction:column;gap:8px}
+.col h5{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+.k{background:#0e2016;border:1px solid rgba(47,224,122,.16);border-radius:9px;padding:9px}
+.k b{display:block;font-size:12px;margin-bottom:3px}
+.k span{color:var(--muted);font-size:11px}
+.k u{text-decoration:none;display:block;margin-top:6px;font-weight:800;color:var(--em2);font-size:12px}
+.k.won{background:rgba(20,167,74,.22);border-color:var(--em2)}
+.inbox{display:grid;grid-template-columns:200px 1fr;gap:12px;height:100%}
+.ilist{display:flex;flex-direction:column;gap:7px}
+.irow{padding:9px 10px;border-radius:9px;background:rgba(255,255,255,.03);font-size:11.5px;color:#b3c3ba}
+.irow.on{background:rgba(20,167,74,.2);border:1px solid rgba(47,224,122,.45);color:var(--text)}
+.irow b{display:block;color:var(--text);font-size:12px}
+.thread{display:flex;flex-direction:column;gap:9px;justify-content:center;padding:6px}
+.bub{max-width:80%;padding:10px 12px;border-radius:13px;font-size:12px;line-height:1.4}
+.bub.c{background:rgba(255,255,255,.07);align-self:flex-start;border-bottom-left-radius:4px}
+.bub.a{background:linear-gradient(180deg,#1bbd55,#12913d);color:#02100a;font-weight:600;align-self:flex-end;border-bottom-right-radius:4px}
+.bub.a small{display:block;margin-top:5px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.flow{display:flex;align-items:center;justify-content:space-between;height:100%;gap:6px;padding:0 4px;position:relative}
+.node{flex:1;min-width:0;text-align:center;padding:14px 6px;border-radius:12px;background:#0e2016;border:1px solid rgba(47,224,122,.3);font-weight:700;font-size:11.5px;position:relative}
+.node small{display:block;color:var(--muted);font-weight:500;font-size:10px;margin-top:4px}
+.node.t{background:rgba(255,90,74,.12);border-color:rgba(255,90,74,.5)}
+.node.e{background:rgba(20,167,74,.26);border-color:var(--em2)}
+.arrow{flex:none;width:16px;height:2px;background:linear-gradient(90deg,transparent,var(--em2));position:relative;overflow:hidden}
+.arrow:after{content:"";position:absolute;left:-8px;top:0;width:8px;height:2px;background:#fff;animation:flowx 1.4s linear infinite}
+@keyframes flowx{to{left:18px}}
+.pcap{text-align:center;margin-top:26px;font-weight:700;color:var(--mint);min-height:28px;letter-spacing:.02em}
+.pcap small{display:block;color:var(--muted);font-weight:500;margin-top:4px}
+
+/* PRICING */
+.pricing{padding:140px 0 60px}
+.pricing .head{text-align:center;margin-bottom:46px}
+.pricing .head p{color:var(--muted);max-width:600px;margin:0 auto;font-size:18px}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{position:relative;background:var(--glass);border:1px solid var(--line);border-radius:26px;padding:34px 28px 28px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;flex-direction:column;transition:border-color .25s;transform-style:preserve-3d;will-change:transform}
+.plan:hover{border-color:rgba(47,224,122,.55)}
+.plan h3{font-size:34px;margin-bottom:6px}
+.plan .d{color:var(--muted);font-size:14.5px;min-height:66px}
+.price{margin:18px 0 4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.price .amt{font-family:Anton;font-size:68px;line-height:1}
+.price .per{color:var(--muted);font-weight:600;font-size:14px}
+.price .old{font-family:Anton;font-size:28px;color:#6d7f74;text-decoration:line-through;text-decoration-color:var(--red)}
+.trial{color:var(--em2);font-weight:700;font-size:13.5px;margin-bottom:6px}
+.lim{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.lim span{font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:99px;padding:5px 11px;background:rgba(255,255,255,.04)}
+.plan ul{list-style:none;display:grid;gap:9px;margin-bottom:26px;font-size:14.5px;color:#cdd9d1}
+.plan li{display:flex;gap:10px}
+.plan li:before{content:"";flex:none;margin-top:7px;width:7px;height:7px;border-radius:2px;background:var(--em2);transform:rotate(45deg)}
+.plan li.h{font-weight:800;color:var(--text);padding-bottom:2px}
+.plan li.h:before{background:transparent}
+.plan .btn{margin-top:auto;width:100%}
+.plan.pop{border-color:rgba(47,224,122,.7);background:linear-gradient(180deg,rgba(20,167,74,.16),var(--glass));box-shadow:0 0 90px -20px rgba(47,224,122,.45)}
+.plan.pop:after{content:"";position:absolute;inset:-1px;border-radius:26px;padding:1.5px;pointer-events:none;
+  background:conic-gradient(from var(--a,0deg),transparent 0 70%,var(--mint) 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 5s linear infinite}
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+.badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,#3df08a,#14A74A);color:#02100a;font-weight:800;font-size:12px;letter-spacing:.12em;padding:6px 16px;border-radius:99px;text-transform:uppercase;white-space:nowrap}
+.badge.red{background:linear-gradient(180deg,#ff7a6a,#e0412f);color:#fff}
+.promo{margin:2px 0 8px;padding:12px 14px;border-radius:14px;border:1px dashed rgba(255,122,106,.65);background:rgba(255,90,74,.08)}
+.promo p{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ff9a8c;margin-bottom:8px}
+.cd{display:flex;gap:8px}
+.cd div{flex:1;text-align:center;background:rgba(0,0,0,.4);border-radius:9px;padding:6px 0}
+.cd b{display:block;font-family:Anton;font-size:26px;line-height:1.1;font-weight:400;font-variant-numeric:tabular-nums}
+.cd small{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fine{text-align:center;color:var(--muted);font-size:13px;margin-top:26px}
+.setup{margin:40px auto 0;max-width:860px;display:flex;gap:22px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:26px 30px;border-radius:22px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(14px)}
+.setup h4{font-family:Anton;font-weight:400;font-size:26px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:4px}
+.setup p{color:var(--muted);font-size:15px;max-width:520px}
+
+/* FINAL */
+.final{padding:100px 0 150px;text-align:center}
+.final .box{border:1px solid rgba(47,224,122,.4);border-radius:34px;padding:96px 24px;background:radial-gradient(ellipse at 50% 0,rgba(20,167,74,.34),rgba(4,8,6,.78) 70%);backdrop-filter:blur(14px);box-shadow:0 0 120px -30px rgba(47,224,122,.5)}
+.final h2{max-width:900px;margin:0 auto 18px;font-size:clamp(40px,7vw,100px)}
+.final p{color:#aebdb4;max-width:560px;margin:0 auto 36px;font-size:19px}
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:14px;background:rgba(4,8,6,.9)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:980px){.plans{grid-template-columns:1fr;max-width:520px;margin:0 auto}.plan .d{min-height:0}.g3{grid-template-columns:1fr}}
+@media(max-width:820px){
+  .fgrid{grid-template-columns:1fr}
+  .featwrap .stick{align-items:flex-end;padding-bottom:20px}
+  .fpanel{min-height:430px;padding:24px 20px 26px}
+  .fstep h3{font-size:32px;margin-bottom:12px}.fstep p{font-size:15px;margin-bottom:14px}.fstep li{font-size:14px}
+  .fstep{left:22px;right:22px;top:26px}
+  .rail{left:22px}
+  .hero{align-items:flex-end;padding-bottom:84px}
+  .inbox{grid-template-columns:1fr}.ilist{display:none}
+  .cols{grid-template-columns:repeat(2,1fr)}.col:nth-child(n+3){display:none}
+  .node small{display:none}.node{font-size:10px;padding:10px 3px}
+}
+@media(max-width:520px){.price .amt{font-size:58px}}
+@media(prefers-reduced-motion:reduce){.btn.primary,.track,.plan.pop:after{animation:none}.rise,.reveal{opacity:1;transform:none;animation:none}.scrub span{opacity:1}}
+
+#vm{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(2,6,4,.92);padding:20px}
+#vm.on{display:flex}
+#vm video{width:min(1100px,100%);max-height:84vh;border-radius:14px;box-shadow:0 0 90px rgba(20,167,74,.4);background:#000}
+#vm button{position:absolute;top:16px;right:20px;background:none;border:0;color:#fff;font-size:40px;cursor:pointer;line-height:1}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vig"></div><div class="grain"></div><div id="cursor"></div><div id="bar"></div>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top" aria-label="Avero One">
+    <svg viewBox="0 0 100 100" fill="#14A74A" aria-hidden="true"><use href="#logo"/></svg>
+    Avero <b>One</b>
+  </a>
+  <a class="btn primary sm" href="#pricing">Start free trial</a>
+</div></nav>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><g id="logo">
+    <rect x="39.85" y="9.85" width="20.3" height="20.3" rx="3.2" transform="rotate(45 50 20)"/>
+    <rect x="9.85" y="39.85" width="20.3" height="20.3" rx="3.2" transform="rotate(45 20 50)"/>
+    <rect x="39.85" y="39.85" width="20.3" height="20.3" rx="3.2" transform="rotate(45 50 50)"/>
+    <rect x="69.85" y="39.85" width="20.3" height="20.3" rx="3.2" transform="rotate(45 80 50)"/>
+    <rect x="39.85" y="69.85" width="20.3" height="20.3" rx="3.2" transform="rotate(45 50 80)"/>
+  </g></defs>
+</svg>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" id="hero"><div class="wrap">
+  <span class="tag rise" style="animation-delay:.2s"><i></i>Website + CRM + automation. One platform.</span>
+  <h1 class="rise" style="animation-delay:.4s">Stop losing customers to <em>outdated tools.</em></h1>
+  <p class="sub rise" style="animation-delay:.65s">Avero One gives you a modern website, a CRM that actually works and automated follow-up in one platform, so every enquiry is captured, chased and converted. Set up in days, not weeks.</p>
+  <div class="row rise" style="animation-delay:.85s">
+    <a class="btn primary xl" href="#pricing">Start 14-day free trial</a>
+    <a class="btn ghost xl" id="heroSecond" href="#how">See how it works</a>
+  </div>
+  <small class="rise" style="animation-delay:1.05s">14-day free trial &nbsp;·&nbsp; Cancel anytime, no lock-in &nbsp;·&nbsp; Plans from $89/mo AUD</small>
+</div><div class="scrollhint"><span></span>Scroll</div></section>
+
+<div class="strip"><div class="track" id="track"></div></div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="pinwrap scrubwrap" id="scrubwrap"><div class="stick"><div class="wrap">
+    <span class="kick">Sound familiar?</span>
+    <p class="scrub" id="scrub" data-text="Every enquiry you miss is a customer your competitor just won. A dated website sends them away. Scattered tools lose them. You started a business, not a patchwork of *software.*"></p>
+  </div></div></div>
+  <div class="pains"><div class="wrap">
+    <h2 class="reveal">Your leads are <em style="color:var(--red)">everywhere.</em><br>Your follow-up is <em style="color:var(--red)">nowhere.</em></h2>
+    <div class="grid g3">
+      <div class="card tilt reveal"><h3>A website that doesn't convert</h3><p>If it looks dated, loads slowly or has no way to capture an enquiry, visitors leave and you never even know they were there.</p></div>
+      <div class="card tilt reveal"><h3>Five tools that don't talk</h3><p>A website here, a spreadsheet there, texts on your phone, invoices somewhere else. Nothing connects, so something always slips.</p></div>
+      <div class="card tilt reveal"><h3>Follow-up that never happens</h3><p>The quote you meant to chase on Thursday is now a competitor's customer. Every day you wait, the odds drop.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- FEATURES (pinned) -->
+<section id="how">
+  <div class="pinwrap featwrap" id="featwrap"><div class="stick"><div class="wrap">
+    <div class="fgrid">
+      <div class="fpanel" id="fpanel">
+        <div class="fstep" data-i="0"><span class="n">01 / 05 &mdash; Capture</span><h3>A modern website that captures every lead.</h3><p>Launch a fast, professional website with forms, funnels and online booking. Every enquiry drops straight into your pipeline.</p><ul><li>Websites, funnels &amp; forms</li><li>Online bookings</li><li>Sales pipelines</li></ul></div>
+        <div class="fstep" data-i="1"><span class="n">02 / 05 &mdash; Follow up</span><h3>Follow-up that runs itself.</h3><p>While you run the business, Avero One chases the quote, nudges the lead, asks for the review and wakes up past customers with win-back emails.</p><ul><li>Workflow automation</li><li>Review requests</li><li>Email marketing</li></ul></div>
+        <div class="fstep" data-i="2"><span class="n">03 / 05 &mdash; Talk</span><h3>One inbox. Every customer.</h3><p>Customer conversations and your marketing tools in the same place, so you always know who said what.</p><ul><li>Customer conversations</li><li>SMS &amp; email <small>(SMS billed by usage)</small></li><li>Social media planning</li></ul></div>
+        <div class="fstep" data-i="3"><span class="n">04 / 05 &mdash; Get paid</span><h3>Quote to cash, without the chasing.</h3><p>Send the invoice, take the payment, close the sale. Your cash flow stops depending on your memory.</p><ul><li>Invoicing &amp; payments</li><li>Payment links <small>(Pro)</small></li><li>Documents &amp; contracts <small>(Pro)</small></li></ul></div>
+        <div class="fstep" data-i="4"><span class="n">05 / 05 &mdash; See it all</span><h3>Your whole business. One screen.</h3><p>Every lead, deal and follow-up in a single view, with reporting that shows what's actually making you money.</p><ul><li>Pipeline view</li><li>Reporting <small>(advanced &amp; custom on Pro)</small></li><li>Team users on every plan</li></ul></div>
+        <div class="rail" id="rail"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div></div>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ALL IN ONE -->
+<section class="all" id="all"><div class="wrap">
+  <div class="head reveal"><h2>One platform. <em>Everything in it.</em></h2><p>Your website, CRM, marketing, bookings and payments, connected from day one. No more stitching apps together.</p></div>
+  <div class="allgrid">
+    <div class="tile tilt reveal"><h4>Website builder</h4><p>Launch a fast, modern site without a developer.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>CRM &amp; pipelines</h4><p>Every contact, deal and conversation in one view.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Funnels &amp; forms</h4><p>Turn visitors into leads that land in your CRM.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Online bookings</h4><p>Let customers book themselves, 24/7.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Email marketing</h4><p>Campaigns connected to your contacts.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Workflow automation</h4><p>Follow-ups, reminders and tasks that run themselves.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Invoicing &amp; payments</h4><p>Send invoices and get paid without the chasing.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Review requests</h4><p>Ask happy customers for reviews automatically.</p><span class="pl">Starter+</span></div>
+    <div class="tile tilt reveal"><h4>Online stores</h4><p>Sell products straight from your own site.</p><span class="pl">Growth+</span></div>
+    <div class="tile tilt reveal"><h4>Courses &amp; communities</h4><p>Teach, host members and build a following.</p><span class="pl">Growth+</span></div>
+    <div class="tile tilt reveal"><h4>Blogs &amp; webinars</h4><p>Publish content and run live sessions.</p><span class="pl">Growth+</span></div>
+    <div class="tile tilt reveal"><h4>Client portal</h4><p>Give customers one place to see everything.</p><span class="pl">Growth+</span></div>
+    <div class="tile tilt reveal"><h4>Advanced reporting</h4><p>Attribution, advertising and custom reports.</p><span class="pl">Pro</span></div>
+    <div class="tile tilt reveal"><h4>Private integrations</h4><p>Connect Avero One to the rest of your stack.</p><span class="pl">Pro</span></div>
+    <div class="tile tilt reveal"><h4>Documents &amp; contracts</h4><p>Send, sign and store them in one place.</p><span class="pl">Pro</span></div>
+    <div class="tile tilt reveal"><h4>AI Employee</h4><p>Handles conversations, voice, content and reviews.</p><span class="pl">Pro</span></div>
+  </div>
+  <p class="allnote">Tags show the plan each feature is included from. Phone/SMS and eligible AI usage are billed separately.</p>
+</div></section>
+
+<!-- CALCULATOR -->
+<section class="calc" id="calc"><div class="wrap">
+  <div class="head reveal"><h2>What are you <em>paying for now?</em></h2><p>Add up your current tools. Enter what you pay each month in AUD. These are your numbers, not our guesses.</p></div>
+  <div class="calcbox reveal">
+    <div class="inputs">
+      <label>Website &amp; hosting<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+      <label>CRM<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+      <label>Email marketing<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+      <label>Booking &amp; scheduling<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+      <label>Invoicing<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+      <label>Social &amp; review tools<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+      <label>Forms, funnels &amp; other<span class="f"><input type="number" min="0" step="1" inputmode="decimal" placeholder="0" data-cin></span></label>
+    </div>
+    <div class="calcout">
+      <div class="tot"><small>You pay now</small><b id="cTot">$0</b><span>/month</span></div>
+      <div class="vs" id="cVs"><p>Enter your costs to see how Avero One compares.</p></div>
+      <a class="btn primary" href="#pricing">Start 14-day free trial</a>
+    </div>
+  </div>
+  <p class="allnote">Estimates only. Doesn't include usage such as SMS and AI.</p>
+</div></section>
+
+<!-- PRODUCT -->
+<section id="product">
+  <div class="pinwrap prodwrap" id="prodwrap"><div class="stick"><div class="wrap" style="width:100%">
+    <div class="prodhead"><h2>This is the screen you'll <em>live in.</em></h2><p>A look at Avero One. Names and figures shown are sample data.</p></div>
+    <div class="deck" id="deck">
+      <div class="pane" data-i="0">
+        <div class="pbar"><i></i><i></i><i></i><b>Pipeline</b><em>Sample data</em></div>
+        <div class="pbody"><div class="cols">
+          <div class="col"><h5>New lead <span>2</span></h5><div class="k"><b>Tran &amp; Co &mdash; annual plan</b><span>Website form</span><u>AU$8,400</u></div><div class="k"><b>Patel Group &mdash; quote</b><span>Missed call</span><u>AU$3,200</u></div></div>
+          <div class="col"><h5>Quote sent <span>2</span></h5><div class="k"><b>Nguyen Studio &mdash; project</b><span>Follow-up due</span><u>AU$12,900</u></div><div class="k"><b>Harbour Cafe &mdash; monthly</b><span>Follow-up sent</span><u>AU$1,150</u></div></div>
+          <div class="col"><h5>Booked <span>1</span></h5><div class="k"><b>Smith Ltd &mdash; consultation</b><span>Thu 10:00am</span><u>AU$4,600</u></div></div>
+          <div class="col"><h5>Won <span>1</span></h5><div class="k won"><b>O'Neill &mdash; full package</b><span>Paid</span><u>AU$9,800</u></div></div>
+        </div></div>
+      </div>
+      <div class="pane" data-i="1">
+        <div class="pbar"><i></i><i></i><i></i><b>Conversations</b><em>Sample data</em></div>
+        <div class="pbody"><div class="inbox">
+          <div class="ilist"><div class="irow on"><b>Tran &amp; Co</b>Pricing enquiry</div><div class="irow"><b>Missed call</b>Text sent automatically</div><div class="irow"><b>Nguyen Studio</b>Quote follow-up</div><div class="irow"><b>Smith Ltd</b>Review request sent</div></div>
+          <div class="thread"><div class="bub c">Hi, can you send me a quote?</div><div class="bub a">Thanks! Got your details. We'll send a quote today. Call or text?<small>Automated reply</small></div><div class="bub c">Text is fine, thanks.</div></div>
+        </div></div>
+      </div>
+      <div class="pane" data-i="2">
+        <div class="pbar"><i></i><i></i><i></i><b>Automation</b><em>Sample data</em></div>
+        <div class="pbody"><div class="flow">
+          <div class="node t">Missed call<small>Trigger</small></div><div class="arrow"></div>
+          <div class="node">Text back<small>Instantly</small></div><div class="arrow"></div>
+          <div class="node">Send quote<small>Same day</small></div><div class="arrow"></div>
+          <div class="node">Chase<small>After 2 days</small></div><div class="arrow"></div>
+          <div class="node e">Ask for review<small>After the sale</small></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="pcap" id="pcap"></div>
+  </div></div></div>
+</section>
+
+<div class="ctarow"><a class="btn primary xl" href="#pricing">Start 14-day free trial</a><a class="btn ghost xl" data-book style="display:none" href="#pricing">Book a call</a></div>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing"><div class="wrap">
+  <div class="head reveal"><h2>Pick a plan. <em>Start today.</em></h2><p>Every plan starts with a 14-day free trial. Cancel anytime. No lock-in contracts. Prices in AUD.</p></div>
+  <div class="plans">
+    <div class="plan tilt reveal">
+      <h3>Starter</h3><p class="d">The essentials to manage your customers, leads, bookings, communications and online presence in one connected platform.</p>
+      <div class="price"><span class="amt">$89</span><span class="per">AUD /month</span></div>
+      <div class="trial">14-day free trial</div>
+      <div class="lim"><span>2 users</span><span>5,000 contacts</span></div>
+      <div class="ai">AI tools: pay per use &middot; Unlimited AI upgrade available</div>
+      <ul>
+        <li>CRM &amp; lead management</li><li>Customer conversations</li><li>Sales pipelines</li><li>Online bookings</li><li>Workflow automation</li><li>Email marketing</li><li>Social media planning</li><li>Websites, funnels &amp; forms</li><li>Invoicing &amp; payments</li><li>Review requests</li><li>Reporting</li>
+      </ul>
+      <a class="btn ghost" data-link="starter" href="#pricing">Start 14-day trial</a>
+    </div>
+    <div class="plan pop tilt reveal">
+      <span class="badge">Most popular</span>
+      <h3>Growth</h3><p class="d">More tools to market, engage and grow with expanded websites, reputation, memberships and AI capabilities.</p>
+      <div class="price"><span class="amt">$197</span><span class="per">AUD /month</span></div>
+      <div class="trial">14-day free trial</div>
+      <div class="lim"><span>5 users</span><span>25,000 contacts</span></div>
+      <div class="ai">AI tools: pay per use &middot; Unlimited AI upgrade available</div>
+      <ul>
+        <li class="h">Everything in Starter, plus:</li><li>Expanded website &amp; marketing tools</li><li>Website analytics</li><li>Blogs</li><li>Surveys &amp; quizzes</li><li>Online stores</li><li>Webinars</li><li>Client portal</li><li>Communities</li><li>Courses &amp; certificates</li><li>Advanced reputation tools</li><li>Brand management tools</li>
+      </ul>
+      <a class="btn primary" data-link="growth" href="#pricing">Start 14-day trial</a>
+    </div>
+    <div class="plan tilt reveal" id="proPlan">
+      <span class="badge red" id="proBadge">Launch offer</span>
+      <h3>Pro</h3><p class="d">The complete Avero One platform with advanced AI, automation, integrations and reporting.</p>
+      <div class="price"><span class="old" id="proOld">$447</span><span class="amt" id="proAmt">$247</span><span class="per">AUD /month</span></div>
+      <div class="promo" id="promo"><p>Offer ends 16 November</p><div class="cd" id="cd"><div><b id="cdD">--</b><small>Days</small></div><div><b id="cdH">--</b><small>Hrs</small></div><div><b id="cdM">--</b><small>Min</small></div><div><b id="cdS">--</b><small>Sec</small></div></div></div>
+      <div class="trial" id="proReg">Regular price $447/month</div>
+      <div class="lim"><span>15 users</span><span>100,000 contacts</span></div>
+      <ul>
+        <li class="h">Everything in Growth, plus:</li><li>Advanced automation</li><li>Campaigns &amp; triggers</li><li>Advanced marketing tools</li><li>Advanced, attribution, advertising &amp; custom reports</li><li>Documents &amp; contracts</li><li>Payment links</li><li>Private integrations</li><li><b>AI Employee Growth included</b> <small style="color:var(--muted)">(monthly usage allowances apply; AI Unlimited upgrade available)</small></li>
+      </ul>
+      <a class="btn primary" data-link="pro" href="#pricing">Go Pro</a>
+    </div>
+  </div>
+  <div class="incl reveal">
+    <div><b>Free onboarding call</b><span>We get your account set up properly.</span></div>
+    <div><b>2 weeks of included support</b><span>A real person while you settle in.</span></div>
+    <div><b>No lock-in contracts</b><span>Cancel anytime.</span></div>
+  </div>
+  <p class="fine">SMS and phone usage, WhatsApp and domain purchases are billed separately, by use. On Starter and Growth, AI tools are pay-per-use. Pro includes the AI Employee Growth plan with its monthly usage allowances; usage beyond that is billed per use. AI Unlimited upgrade available on every plan.</p>
+  <div class="setup reveal"><div><h4>Want us to set it all up?</h4><p>Set up Avero One yourself, or have our team configure your business, workflows and processes. Moving from another system? Data migration is part of Avero Digital Launch. Most businesses are up and running in days, not weeks.</p></div><a class="btn ghost" id="launchBtn" href="#pricing">Ask about Avero Digital Launch</a></div>
+</div></section>
+
+<!-- FAQ -->
+<section class="faq" id="faq"><div class="wrap">
+  <div class="head reveal"><h2>Straight <em>answers.</em></h2></div>
+  <div class="faqlist reveal">
+    <details><summary>What happens after I sign up?</summary><p>You get a free onboarding call to set your account up properly, plus two weeks of included support while you settle in.</p></details>
+    <details><summary>Am I locked into a contract?</summary><p>No. There are no lock-in contracts. Cancel anytime.</p></details>
+    <details><summary>What happens after the first two weeks?</summary><p>Support is included for your first two weeks. After that, ongoing support plans are available if you'd like a hand. Ask us and we'll tell you what fits.</p></details>
+    <details><summary>Are there charges on top of my plan?</summary><p>SMS and phone usage, WhatsApp and domain purchases are billed separately, by use. On Starter and Growth, AI tools are pay-per-use. Pro includes the AI Employee Growth plan with its monthly usage allowances; usage beyond that is billed per use. AI Unlimited upgrade available on every plan.</p></details>
+    <details><summary>How are texts charged?</summary><p>Texts are billed separately by use, so you only pay for what you send.</p></details>
+    <details><summary>Can you move my existing contacts and data over?</summary><p>Yes. Data migration is part of Avero Digital Launch, our done-for-you setup. Ask us for a quote.</p></details>
+    <details><summary>How many people and contacts can I have?</summary><p>Starter includes 2 users and 5,000 contacts, Growth 5 users and 25,000 contacts, and Pro 15 users and 100,000 contacts.</p></details>
+    <details><summary>Do I need to be technical?</summary><p>Most people don't need to be. We run your onboarding call, and Avero Digital Launch is there if you'd rather we configure everything for you.</p></details>
+  </div>
+</div></section>
+
+<!-- FINAL -->
+<section class="final"><div class="wrap"><div class="box reveal">
+  <h2>Every day without it is a day of <em>missed customers.</em></h2>
+  <p>Start your 14-day free trial and put your website, CRM and follow-up to work.</p>
+  <div class="ctarow" style="padding-top:0"><a class="btn primary xl" href="#pricing">Start 14-day free trial</a><a class="btn ghost xl" data-book style="display:none" href="#pricing">Book a call</a></div>
+  <p style="margin:18px auto 0;font-size:14px;color:var(--muted)">Cancel anytime &middot; No lock-in contracts &middot; Free onboarding call</p>
+</div></div></section>
+
+</main>
+
+<footer><div class="wrap"><span>&copy; <span id="yr"></span> Avero Automations. All rights reserved.</span><span>Avero One is a product of Avero Automations.</span></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* =========================== EDIT THESE =========================== */
+const CONFIG = {
+  links: {
+    starter: 'https://link.averoautomations.com.au/payment-link/6a969241f9c8c807930bb284',
+    growth:  'https://link.averoautomations.com.au/payment-link/6a9692fbf9c8c807930bb285',
+    pro:     'https://link.averoautomations.com.au/payment-link/6a969311d6768df0544490e3'
+  },
+  launchUrl: '',                                   // optional: link for "Avero Digital Launch" (leave '' to hide the button)
+  bookUrl: '',                                     // optional: booking-calendar link; shows "Book a call" buttons when set
+  demoUrl: 'assets/avero-one-demo.mp4',                                     // optional: demo video link; turns the hero's second button into "Watch the demo"
+  proPromoEnds: '2026-11-16T23:59:59+11:00',       // Pro launch offer end (Sydney time)
+  proPromoPrice: 247, proRegularPrice: 447
+};
+/* ================================================================== */
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const clamp=(x,a,b)=>Math.min(b===undefined?1:b,Math.max(a===undefined?0:a,x));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const smooth=(a,b,x)=>{const t=clamp((x-a)/(b-a));return t*t*(3-2*t)};
+const damp=(c,t,l,dt)=>c+(t-c)*(1-Math.exp(-l*dt));
+const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- static page logic ---------- */
+$('#yr').textContent=new Date().getFullYear();
+const trades=['Modern websites','CRM','Online booking','Automation','Email &amp; SMS','Invoicing','Reviews','Reporting'];
+$('#track').innerHTML=[0,1,2,3].map(()=>trades.map(t=>'<span>'+t+' <b>/</b></span>').join('')).join('');
+
+$$('[data-link]').forEach(a=>{const u=CONFIG.links[a.dataset.link]; if(u){a.href=u;a.rel='noopener'}});
+const lb=$('#launchBtn'); const lu=CONFIG.launchUrl||CONFIG.bookUrl; if(lu){lb.href=lu;lb.rel='noopener'}else{lb.style.display='none'}
+if(CONFIG.bookUrl){$$('[data-book]').forEach(a=>{a.href=CONFIG.bookUrl;a.rel='noopener';a.style.display=''})}
+if(CONFIG.demoUrl){const hs=$('#heroSecond');hs.href=CONFIG.demoUrl;hs.textContent='Watch the demo';
+const vm=$('#vm'),vv=$('#vmv');const closeV=()=>{vm.classList.remove('on');vv.pause()};
+if(/^https?:\/\/(www\.)?(youtube\.com|youtu\.be)/.test(CONFIG.demoUrl)){hs.rel='noopener';hs.target='_blank'}
+else{hs.addEventListener('click',e=>{e.preventDefault();if(!vv.src)vv.src=CONFIG.demoUrl;vm.classList.add('on');vv.play().catch(()=>{})});
+$('#vmx').addEventListener('click',closeV);vm.addEventListener('click',e=>{if(e.target===vm)closeV()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeV()})}}
+
+/* "What are you paying for now?" calculator */
+(function(){
+  const ins=$$('[data-cin]'),tot=$('#cTot'),vs=$('#cVs');
+  const promoOn=Date.now()<new Date(CONFIG.proPromoEnds).getTime();
+  const plans=[['Starter',89],['Growth',197],['Pro',promoOn?CONFIG.proPromoPrice:CONFIG.proRegularPrice]];
+  const fmt=n=>'$'+Math.round(n).toLocaleString('en-AU');
+  function calc(){
+    let sum=0,cnt=0;ins.forEach(i=>{const v=parseFloat(i.value);if(v>0){sum+=v;cnt++}});
+    tot.textContent=fmt(sum);
+    if(!sum){vs.innerHTML='<p>Enter your costs to see how Avero One compares.</p>';return}
+    vs.innerHTML=plans.map(p=>{
+      const d=sum-p[1];
+      return d>0?'<div class="save"><span>'+p[0]+' ('+fmt(p[1])+'/mo)</span><em>Save '+fmt(d)+'/mo &middot; '+fmt(d*12)+'/yr</em></div>'
+                :'<div><span>'+p[0]+' ('+fmt(p[1])+'/mo)</span><em>'+fmt(-d)+'/mo more</em></div>';
+    }).join('')+'<p>'+(cnt>1?'Avero One brings these '+cnt+' tools into one platform.':'Avero One connects your website, CRM and follow-up in one place.')+'</p>';
+  }
+  ins.forEach(i=>i.addEventListener('input',calc));
+})();
+
+/* Pro launch offer + countdown (hides itself when it expires) */
+(function(){
+  const end=new Date(CONFIG.proPromoEnds).getTime();
+  const old=$('#proOld'),amt=$('#proAmt'),promo=$('#promo'),reg=$('#proReg'),badge=$('#proBadge');
+  const d=$('#cdD'),h=$('#cdH'),m=$('#cdM'),s=$('#cdS');
+  const p2=n=>String(n).padStart(2,'0');
+  function tick(){
+    const left=end-Date.now();
+    if(isNaN(end)||left<=0){
+      old.style.display='none';promo.style.display='none';badge.style.display='none';
+      amt.textContent='$'+CONFIG.proRegularPrice;reg.textContent='14-day free trial';return false;
+    }
+    const S=Math.floor(left/1000);
+    d.textContent=p2(Math.floor(S/86400));h.textContent=p2(Math.floor(S%86400/3600));
+    m.textContent=p2(Math.floor(S%3600/60));s.textContent=p2(S%60);return true;
+  }
+  if(tick()){const iv=setInterval(()=>{if(!tick())clearInterval(iv)},1000)}
+})();
+
+/* reveal + tilt */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+$$('.reveal').forEach(el=>io.observe(el));
+if(matchMedia&&matchMedia('(hover:hover)').matches&&!reduce){
+  $$('.tilt').forEach(c=>{
+    c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      c.style.transform='perspective(800px) rotateY('+(x*9)+'deg) rotateX('+(-y*9)+'deg) translateZ(6px)'});
+    c.addEventListener('mouseleave',()=>{c.style.transform=''});
+  });
+}
+
+/* scroll-scrubbed headline */
+const scrubEl=$('#scrub');
+const words=[];
+(function(){
+  const txt=scrubEl.dataset.text.split(' ');
+  txt.forEach((w,i)=>{
+    const sp=document.createElement('span');
+    let em=false; if(w.charAt(0)==='*'){em=true;w=w.replace(/\*/g,'')}
+    sp.textContent=w; if(em)sp.className='em';
+    scrubEl.appendChild(sp); scrubEl.appendChild(document.createTextNode(' ')); words.push(sp);
+  });
+})();
+
+/* pinned-section helpers */
+const el={hero:$('#hero'),problem:$('#problem'),scrubwrap:$('#scrubwrap'),featwrap:$('#featwrap'),prodwrap:$('#prodwrap'),pricing:$('#pricing'),final:$('.final')};
+const steps=$$('.fstep'),dots=$$('#rail i'),panes=$$('.pane');
+const pcap=$('#pcap');
+const capText=[['Pipeline','Every lead and deal, moving left to right.'],['Conversations','Replies go out fast, even when you\'re flat out.'],['Automation','Missed call in, follow-up out. No effort.']];
+function pin(node,vh){const r=node.getBoundingClientRect();return clamp(-r.top/Math.max(1,(r.height-vh)))}
+function pres(node,vh){const r=node.getBoundingClientRect();return smooth(0,1,Math.min(clamp((vh-r.top)/(vh*.6)),clamp(r.bottom/(vh*.6))))}
+
+/* ---------- 3D ---------- */
+const S={chaos:0,step:0,x:3.1,y:0,s:1.15,cz:9.2,bright:1,wF:0,fx:0,fy:0,zoom:0,gridA:.25};
+let T=null; // THREE scene bundle
+let glOK=false;
+try{
+  if(typeof THREE==='undefined')throw new Error('no three');
+  const canvas=$('#gl');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:innerWidth>760,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,innerWidth<760?1.5:2));
+  const scene=new THREE.Scene();
+  scene.fog=new THREE.FogExp2(0x040806,0.03);
+  const camera=new THREE.PerspectiveCamera(50,1,.1,120);camera.position.set(0,0,9.2);
+  const world=new THREE.Group();scene.add(world);
+
+  scene.add(new THREE.HemisphereLight(0xa6ffd0,0x03140a,.7));
+  const key=new THREE.DirectionalLight(0xffffff,1.1);key.position.set(-4,6,6);scene.add(key);
+  const rim=new THREE.PointLight(0x2fe07a,2.4,30);rim.position.set(5,-2,4);scene.add(rim);
+  const mouseL=new THREE.PointLight(0xa6ffd0,2.2,16);mouseL.position.set(0,0,5);scene.add(mouseL);
+
+  /* soft glow texture */
+  const gc=document.createElement('canvas');gc.width=gc.height=128;const gx=gc.getContext('2d');
+  const gg=gx.createRadialGradient(64,64,0,64,64,64);
+  gg.addColorStop(0,'rgba(166,255,208,1)');gg.addColorStop(.3,'rgba(47,224,122,.45)');gg.addColorStop(1,'rgba(20,167,74,0)');
+  gx.fillStyle=gg;gx.fillRect(0,0,128,128);
+  const glowTex=new THREE.CanvasTexture(gc);
+
+  /* ---- the logo: five rounded diamonds ---- */
+  function roundedSquare(w,r){
+    const h=w/2,s=new THREE.Shape();
+    s.moveTo(-h+r,-h);s.lineTo(h-r,-h);s.quadraticCurveTo(h,-h,h,-h+r);s.lineTo(h,h-r);s.quadraticCurveTo(h,h,h-r,h);
+    s.lineTo(-h+r,h);s.quadraticCurveTo(-h,h,-h,h-r);s.lineTo(-h,-h+r);s.quadraticCurveTo(-h,-h,-h+r,-h);return s;
+  }
+  const geo=new THREE.ExtrudeGeometry(roundedSquare(1,.2),{depth:.26,bevelEnabled:true,bevelThickness:.07,bevelSize:.05,bevelSegments:4,curveSegments:10});
+  geo.center();
+  const SP=1.44;
+  const HOME=[new THREE.Vector3(0,0,0),new THREE.Vector3(0,SP,0),new THREE.Vector3(-SP,0,0),new THREE.Vector3(SP,0,0),new THREE.Vector3(0,-SP,0)]; // centre, top, left, right, bottom
+  const ORDER=[1,2,3,4,0]; // feature tour order
+  const rnd=(a,b)=>a+Math.random()*(b-a);
+  const dia=[];
+  for(let i=0;i<5;i++){
+    const mat=new THREE.MeshStandardMaterial({color:0x14A74A,metalness:.35,roughness:.3,emissive:0x0a5a26,emissiveIntensity:.35});
+    const mesh=new THREE.Mesh(geo,mat);mesh.rotation.z=Math.PI/4;
+    const piv=new THREE.Group();piv.add(mesh);
+    const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,blending:THREE.AdditiveBlending,depthWrite:false,transparent:true,opacity:.35}));
+    halo.scale.set(3.4,3.4,1);halo.position.z=-.3;piv.add(halo);
+    world.add(piv);
+    const a=rnd(0,Math.PI*2),rad=rnd(5,8.5);
+    dia.push({piv,mesh,mat,halo,act:0,
+      scat:new THREE.Vector3(Math.cos(a)*rad,Math.sin(a)*rad*.7,rnd(-4,3)),
+      chaos:new THREE.Vector3(Math.cos(a+1.3)*rad*1.1,Math.sin(a+1.3)*rad*.65,rnd(-5,2)),
+      ph:rnd(0,6.28),spin:rnd(.6,1.6)});
+  }
+  /* beams + pulses */
+  const beams=[],pulses=[];
+  for(let k=1;k<5;k++){
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),HOME[k].clone()]);
+    const l=new THREE.Line(g,new THREE.LineBasicMaterial({color:0x2fe07a,transparent:true,opacity:0,blending:THREE.AdditiveBlending}));
+    world.add(l);beams.push(l);
+    const p=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,blending:THREE.AdditiveBlending,depthWrite:false,transparent:true,opacity:0}));
+    p.scale.set(.7,.7,1);world.add(p);pulses.push(p);
+  }
+  /* orbit rings */
+  const rings=[];
+  [[2.7,.012],[3.5,.009],[4.4,.007]].forEach((c,i)=>{
+    const m=new THREE.Mesh(new THREE.TorusGeometry(c[0],c[1],8,180),new THREE.MeshBasicMaterial({color:i%2?0x14A74A:0x2fe07a,transparent:true,opacity:.5,blending:THREE.AdditiveBlending}));
+    m.rotation.x=Math.PI/2.4+i*.45;m.rotation.y=i*.7;world.add(m);rings.push(m);
+  });
+
+  /* particles: ordered galaxy <-> chaos (colour shifts emerald -> red) */
+  const mobile0=innerWidth<760;
+  const N=mobile0?1400:4200;
+  const cur=new Float32Array(N*3),ord=new Float32Array(N*3),chs=new Float32Array(N*3),col=new Float32Array(N*3);
+  const cO=[new THREE.Color(0x14A74A),new THREE.Color(0x2fe07a),new THREE.Color(0xa6ffd0)],cC=[new THREE.Color(0xff5a4a),new THREE.Color(0xff8a3c),new THREE.Color(0xffb199)];
+  const colO=new Float32Array(N*3),colC=new Float32Array(N*3);
+  for(let i=0;i<N;i++){
+    const arm=i%3,r=2.4+Math.pow(Math.random(),.7)*9,ang=r*.55+arm*(Math.PI*2/3)+rnd(-.25,.25);
+    ord[i*3]=Math.cos(ang)*r;ord[i*3+1]=rnd(-.5,.5)*(1+r*.08);ord[i*3+2]=Math.sin(ang)*r*.8-2;
+    chs[i*3]=rnd(-18,18);chs[i*3+1]=rnd(-10,10);chs[i*3+2]=rnd(-10,6);
+    cur[i*3]=chs[i*3];cur[i*3+1]=chs[i*3+1];cur[i*3+2]=chs[i*3+2];
+    const a=cO[(Math.random()*3)|0],b=cC[(Math.random()*3)|0];
+    colO[i*3]=a.r;colO[i*3+1]=a.g;colO[i*3+2]=a.b;colC[i*3]=b.r;colC[i*3+1]=b.g;colC[i*3+2]=b.b;
+    col[i*3]=colO[i*3];col[i*3+1]=colO[i*3+1];col[i*3+2]=colO[i*3+2];
+  }
+  const pg=new THREE.BufferGeometry();
+  pg.setAttribute('position',new THREE.BufferAttribute(cur,3));pg.setAttribute('color',new THREE.BufferAttribute(col,3));
+  const dc=document.createElement('canvas');dc.width=dc.height=64;const dx=dc.getContext('2d');
+  const dg=dx.createRadialGradient(32,32,0,32,32,32);dg.addColorStop(0,'rgba(255,255,255,1)');dg.addColorStop(.4,'rgba(255,255,255,.5)');dg.addColorStop(1,'rgba(255,255,255,0)');
+  dx.fillStyle=dg;dx.fillRect(0,0,64,64);
+  const pts=new THREE.Points(pg,new THREE.PointsMaterial({size:mobile0?.16:.13,map:new THREE.CanvasTexture(dc),vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false}));
+  scene.add(pts);
+
+  /* chaos chips */
+  function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+  function chipTex(text){
+    const c=document.createElement('canvas');c.width=512;c.height=128;const x=c.getContext('2d');
+    x.fillStyle='rgba(34,9,7,.82)';rr(x,6,6,500,116,58);x.fill();
+    x.strokeStyle='rgba(255,90,74,.9)';x.lineWidth=3;x.stroke();
+    x.fillStyle='#ff5a4a';x.beginPath();x.arc(52,64,12,0,6.283);x.fill();
+    x.font='700 42px Inter,Arial,sans-serif';x.fillStyle='#ffd9d3';x.textBaseline='middle';x.fillText(text,84,67);
+    const t=new THREE.CanvasTexture(c);return t;
+  }
+  const chipText=['MISSED CALL','NEW FB MESSAGE','UNREAD TEXT','QUOTE NOT SENT','NO FOLLOW-UP','INVOICE OVERDUE','OUTDATED WEBSITE','ENQUIRY FORM','NO REPLY YET','SPREADSHEET CHAOS','DOUBLE BOOKED','LOST LEAD'];
+  const chips=chipText.map((t,i)=>{
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:chipTex(t),transparent:true,opacity:0,depthWrite:false}));
+    sp.scale.set(3.1,.78,1);scene.add(sp);
+    const a=(i/chipText.length)*Math.PI*2+rnd(-.3,.3);
+    return {sp,base:new THREE.Vector3(Math.cos(a)*rnd(4.5,8.5),Math.sin(a)*rnd(2.2,5),rnd(-5,3)),ph:rnd(0,6.28),dz:rnd(.5,1.5)};
+  });
+
+  /* floor grid */
+  const grid=new THREE.GridHelper(80,80,0x2fe07a,0x14A74A);
+  grid.position.y=-4.6;grid.material.transparent=true;grid.material.opacity=.2;scene.add(grid);
+
+  function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+  addEventListener('resize',resize);resize();
+  T={renderer,scene,camera,world,dia,beams,pulses,rings,pts,pg,cur,ord,chs,col,colO,colC,N,chips,grid,rim,mouseL,HOME,ORDER,glowTex};
+  glOK=true;
+}catch(err){
+  document.documentElement.classList.add('nogl');
+  if(window.console)console.warn('3D disabled:',err&&err.message);
+}
+
+/* ---------- main loop ---------- */
+let mx=0,my=0,smx=0,smy=0,lastY=0,vel=0;
+addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;
+  const c=$('#cursor');c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},{passive:true});
+const t0=performance.now();let last=t0;
+const bar=$('#bar');
+
+/* per-section scene targets: [x,y,scale,camZ,bright] desktop / mobile */
+function secTargets(m){
+  return m?{
+    hero:[0,2.1,.72,10.5,1],problem:[0,0,.7,10.5,.9],feat:[0,2.5,.78,10,1],prod:[0,3.4,.4,12,.5],pricing:[0,0,1.1,13,.3],fin:[0,0,1.2,13,.7]
+  }:{
+    hero:[3.1,0,1.15,9.2,1],problem:[0,0,.9,10,.9],feat:[3.0,0,1.28,9,1],prod:[0,2.7,.5,11.5,.5],pricing:[0,0,1.5,13,.3],fin:[0,0,1.9,13,.7]
+  };
+}
+
+function frame(now){
+  requestAnimationFrame(frame);
+  if(document.hidden)return;
+  const dt=Math.min(.05,(now-last)/1000||.016);last=now;
+  const t=(now-t0)/1000;
+  const vh=innerHeight,y=window.scrollY;
+  vel=damp(vel,y-lastY,6,dt);lastY=y;
+  const mobile=innerWidth<760;
+
+  bar.style.transform='scaleX('+clamp(y/Math.max(1,document.documentElement.scrollHeight-vh))+')';
+
+  /* scrubbed headline */
+  const sp=pin(el.scrubwrap,vh), n=words.length;
+  for(let i=0;i<n;i++){words[i].style.opacity=(.14+.86*clamp((sp*1.12*(n+4)-i)/3)).toFixed(3)}
+
+  /* features: step + rail + captions */
+  const fp=pin(el.featwrap,vh);
+  const stepF=clamp(fp*5-.5,0,4);
+  const idx=Math.round(stepF);
+  steps.forEach((s,i)=>s.classList.toggle('on',i===idx&&pres(el.featwrap,vh)>.05));
+  dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+
+  /* product deck */
+  const pp=pin(el.prodwrap,vh), act=pp*2;
+  const ci=Math.round(act);
+  panes.forEach((p,i)=>{
+    const d=i-act, ad=Math.abs(d);
+    p.style.transform='translate(-50%,-50%) translateX('+(d*58)+'%) translateZ('+(-ad*260)+'px) rotateY('+(-d*30)+'deg) scale('+(1-.1*Math.min(ad,1.6))+')';
+    p.style.opacity=clamp(1-.5*ad,0,1).toFixed(3);
+    p.style.zIndex=String(10-Math.round(ad*3));
+  });
+  if(pcap.dataset.c!==String(ci)){pcap.dataset.c=ci;pcap.innerHTML=capText[ci][0]+'<small>'+capText[ci][1]+'</small>'}
+
+  if(!glOK)return;
+
+  /* ---- section weights -> targets ---- */
+  const W={hero:pres(el.hero,vh),problem:pres(el.problem,vh),feat:pres(el.featwrap,vh),prod:pres(el.prodwrap,vh),pricing:pres(el.pricing,vh),fin:pres(el.final,vh)};
+  const TG=secTargets(mobile);let tw=0;const tgt=[0,0,0,0,0];
+  Object.keys(W).forEach(k=>{const w=W[k]+1e-4;tw+=w;for(let j=0;j<5;j++)tgt[j]+=TG[k][j]*w});
+  for(let j=0;j<5;j++)tgt[j]/=tw;
+
+  const wF=W.feat*(1-W.problem);
+  const chaosT=reduce?0:W.problem;
+  S.chaos=damp(S.chaos,chaosT,3.2,dt);
+  S.step=damp(S.step,stepF,5,dt);
+  S.wF=damp(S.wF,wF,5,dt);
+  S.x=damp(S.x,tgt[0],4,dt);S.y=damp(S.y,tgt[1],4,dt);S.s=damp(S.s,tgt[2],4,dt);S.cz=damp(S.cz,tgt[3],4,dt);S.bright=damp(S.bright,tgt[4],4,dt);
+
+  const intro=reduce?1:clamp(t/2.6);
+  const ie=1-Math.pow(1-intro,4);
+  const assemble=ie*(1-S.chaos);
+
+  /* focus vector for the tour */
+  const seg=Math.min(3,Math.floor(S.step)),fr=S.step-seg;
+  const e=smooth(.28,.72,fr);
+  const a=T.HOME[T.ORDER[seg]],b=T.HOME[T.ORDER[seg+1]];
+  const fx=lerp(a.x,b.x,e),fy=lerp(a.y,b.y,e);
+  const centre=smooth(3,4,S.step);
+
+  smx=damp(smx,mx,4,dt);smy=damp(smy,my,4,dt);
+  const wf=S.wF;
+  T.world.position.x=S.x-fx*.55*wf;
+  T.world.position.y=S.y-fy*.55*wf;
+  T.world.scale.setScalar(S.s*(1+.18*wf*(1-centre)));
+  T.world.rotation.y=Math.sin(t*.25)*.16+smx*.5+fx*.12*wf+vel*.004;
+  T.world.rotation.x=smy*.3-fy*.08*wf+Math.sin(t*.2)*.05;
+  T.camera.position.set(smx*.9,-smy*.6,S.cz-2.2*wf*(1-centre));
+  if(S.chaos>.02){T.camera.position.x+=Math.sin(t*23)*.03*S.chaos;T.camera.position.y+=Math.cos(t*19)*.03*S.chaos}
+  T.camera.lookAt(0,0,0);
+  T.mouseL.position.set(smx*12,-smy*8,4);
+
+  /* diamonds */
+  for(let i=0;i<5;i++){
+    const d=T.dia[i],home=T.HOME[i];
+    /* intro orbit + chaos scatter */
+    const sc=d.scat,ch=d.chaos;
+    const px=lerp(lerp(sc.x,ch.x,S.chaos),home.x,assemble),py=lerp(lerp(sc.y,ch.y,S.chaos),home.y,assemble),pz=lerp(lerp(sc.z,ch.z,S.chaos),home.z,assemble);
+    const sway=1-assemble;
+    d.piv.position.set(px+Math.sin(t*.7+d.ph)*1.3*sway,py+Math.cos(t*.6+d.ph)*1.1*sway+Math.sin(t*1.2+d.ph)*.05*assemble,pz);
+    const order=T.ORDER.indexOf(i);
+    const target=wf>.02?clamp(1-Math.abs(S.step-order)*1.4):0;
+    d.act=damp(d.act,target,7,dt);
+    d.mesh.rotation.y=Math.sin(t*.6+d.ph)*.25*assemble+t*d.spin*sway*2+d.act*Math.sin(t*1.5)*.25;
+    d.mesh.rotation.x=Math.cos(t*.5+d.ph)*.12*assemble+t*d.spin*sway*1.3;
+    const base=.9+.1*wf*(1-centre)*0+(wf>.02?-.1*wf*(1-centre):0);
+    d.piv.scale.setScalar(base+d.act*.28*wf);
+    const redTint=S.chaos;
+    d.mat.emissiveIntensity=(.3+d.act*1.1+(1-wf)*.15)*S.bright*(1-redTint*.3);
+    d.mat.color.setRGB(lerp(.078,.9,redTint*.55),lerp(.655,.28,redTint*.55),lerp(.29,.2,redTint*.55));
+    d.mat.emissive.setRGB(lerp(.04,.5,redTint*.5),lerp(.35,.1,redTint*.5),lerp(.15,.06,redTint*.5));
+    d.halo.material.opacity=(.22+d.act*.6)*S.bright*(1-S.chaos*.4);
+    d.halo.scale.setScalar(3.2+d.act*1.4);
+  }
+  /* beams + pulses */
+  for(let k=0;k<4;k++){
+    const hi=T.dia[T.ORDER[k]===0?0:T.ORDER[k]];
+    const o=clamp(hi.act)*wf*assemble;
+    T.beams[k].material.opacity=.25+o*.75;T.beams[k].visible=assemble>.5;
+    const ph=((t*.8+k*.27)%1);
+    const hp=T.HOME[T.ORDER[k]];
+    T.pulses[k].position.set(hp.x*ph,hp.y*ph,.2);
+    T.pulses[k].material.opacity=o*(1-Math.abs(ph-.5)*1.2);
+  }
+  T.rings.forEach((r,i)=>{r.rotation.z+=(.002+i*.0014)*(reduce?.2:1)+vel*.0004;r.material.opacity=.45*S.bright*assemble;r.visible=assemble>.05});
+
+  /* particles */
+  const o=1-S.chaos,pt=t*.05+y*.0004;
+  const cs=Math.cos(pt),sn=Math.sin(pt),N=T.N,cur=T.cur,ord=T.ord,chs=T.chs,col=T.col,colO=T.colO,colC=T.colC,ch=S.chaos;
+  for(let i=0;i<N;i++){
+    const i3=i*3,ox=ord[i3],oz=ord[i3+2];
+    const rx=ox*cs-oz*sn,rz=ox*sn+oz*cs;
+    const tx=rx*o+chs[i3]*ch,ty=ord[i3+1]*o+chs[i3+1]*ch+Math.sin(t*.7+i)*.03,tz=rz*o+chs[i3+2]*ch;
+    cur[i3]+=(tx-cur[i3])*.06;cur[i3+1]+=(ty-cur[i3+1])*.06;cur[i3+2]+=(tz-cur[i3+2])*.06;
+    col[i3]=colO[i3]+(colC[i3]-colO[i3])*ch;col[i3+1]=colO[i3+1]+(colC[i3+1]-colO[i3+1])*ch;col[i3+2]=colO[i3+2]+(colC[i3+2]-colO[i3+2])*ch;
+  }
+  T.pg.attributes.position.needsUpdate=true;T.pg.attributes.color.needsUpdate=true;
+  T.pts.position.x=T.world.position.x*.5;T.pts.position.y=T.world.position.y*.4;
+  T.pts.material.opacity=.9*lerp(.55,1,S.bright);
+
+  /* chips fly in during chaos, snap away as order returns */
+  const prog=clamp(-el.problem.getBoundingClientRect().top/Math.max(1,el.problem.offsetHeight));
+  T.chips.forEach((c,i)=>{
+    const rush=(prog-.35)*9*c.dz;
+    const px=c.base.x+Math.sin(t*.4+c.ph)*.6,py=c.base.y+Math.cos(t*.5+c.ph)*.4,pz=c.base.z+rush;
+    c.sp.position.set(px*S.chaos,py*S.chaos,pz*S.chaos);
+    c.sp.material.opacity=clamp(S.chaos*1.2-.1)*(.95-clamp((pz-6)/4)*.95);
+    c.sp.visible=S.chaos>.03;
+  });
+
+  /* floor grid slides with scroll */
+  T.grid.position.z=((y*.012)%1);
+  T.grid.material.opacity=lerp(.05,.22,clamp(W.hero+W.fin*.5+W.feat*.6));
+  T.rim.intensity=2+Math.sin(t)*.3;
+
+  T.renderer.render(T.scene,T.camera);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+<div id="vm" role="dialog" aria-label="Avero One demo video"><button id="vmx" aria-label="Close">&times;</button><video id="vmv" controls playsinline preload="none" poster="assets/demo-poster.jpg"></video></div>
+</body>
+</html>
